@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppMinhasCompras.Views.ListaProduto"
+             Title="ListaProduto">
+    <VerticalStackLayout>
+        
+        <!-- Campo de busca -->
+        <SearchBar 
+            x:Name="txt_search" 
+            Placeholder="Buscar produto..."
+            TextChanged="txt_search_TextChanged"/>
+
+        <!-- Lista de produtos -->
+        <CollectionView x:Name="lst_produtos">
+
+            <!-- Define como cada item será exibido -->
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate>
+
+                    <!-- Card visual de cada produto -->
+                    <Frame Margin="5" Padding="10" BorderColor="Gray">
+
+                        <VerticalStackLayout>
+
+                            <!-- Nome do produto -->
+                            <Label Text="{Binding Descricao}"
+                                   FontSize="18"
+                                   FontAttributes="Bold"/>
+
+                            <!-- Quantidade -->
+                            <Label Text="{Binding Quantidade,
+                                          StringFormat='Quantidade: {0}'}"/>
+
+                            <!-- Preço -->
+                            <Label Text="{Binding Preco,
+                                          StringFormat='Preço: R$ {0:F2}'}"/>
+
+                        </VerticalStackLayout>
+
+                    </Frame>
+
+                </DataTemplate>
+
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>
