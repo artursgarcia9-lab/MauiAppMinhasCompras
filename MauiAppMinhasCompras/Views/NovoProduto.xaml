@@ -2,8 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppMinhasCompras.Views.NovoProduto"
-             Title="NovoProduto">
-    <VerticalStackLayout>
+             Title="Adição de Produto">
+    <VerticalStackLayout Padding="20" Spacing="15">
         
         <!-- Campo Descrição -->
         <Label Text="Descrição do produto"/>
@@ -22,10 +22,24 @@
                 Keyboard="Numeric"
                 Placeholder="Ex: 5.99"/>
 
-        <!-- Botão salvar -->
-        <Button Text="Salvar Produto"
+        <!--Botões de confirmação-->
+        <HorizontalStackLayout Spacing="10">
+
+            <!--Botão para Adicionar Produto-->
+            <Button Text="Salvar"
                     Clicked="btn_salvar_Clicked"
-                    BackgroundColor="Green"
-                    TextColor="White"/>
+                    BackgroundColor="DarkGreen"
+                    TextColor="White"
+                    HorizontalOptions="FillAndExpand"/>
+
+            <!--Botão para Cancelar-->
+            <Button Text="Cancelar"
+                    Clicked="btn_cancelar_Clicked"
+                    BackgroundColor="Red"
+                    TextColor="White"
+                    HorizontalOptions="FillAndExpand"/>
+
+        </HorizontalStackLayout>
+
     </VerticalStackLayout>
 </ContentPage>

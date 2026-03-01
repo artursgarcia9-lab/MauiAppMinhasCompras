@@ -50,5 +50,11 @@ namespace MauiAppMinhasCompras.Views
                 await DisplayAlert("Erro", ex.Message, "OK");
             }
         }
+
+        // Cancela a criação e volta para a tela anterior
+        private async void btn_cancelar_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
+        }
     }
 }

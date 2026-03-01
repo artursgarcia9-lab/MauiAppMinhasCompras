@@ -2,17 +2,51 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppMinhasCompras.Views.ListaProduto"
-             Title="ListaProduto">
+             Title="Lista de Produto">
     <VerticalStackLayout>
-        
-        <!-- Campo de busca -->
-        <SearchBar 
-            x:Name="txt_search" 
-            Placeholder="Buscar produto..."
-            TextChanged="txt_search_TextChanged"/>
+
+        <Grid Grid.Row="0" Padding="10" ColumnSpacing="10">
+
+            <!-- Define 3 colunas -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" /> <!-- barra ocupa todo espaço -->
+                <ColumnDefinition Width="120" /> <!-- botão de adicionar -->
+                <ColumnDefinition Width="120" />  <!-- botão de editar -->
+            </Grid.ColumnDefinitions>
+
+            <!-- Barra de pesquisa ocupa coluna 0 -->
+            <SearchBar x:Name="txt_search"
+               Grid.Column="0"
+               Placeholder="Buscar produto..."
+               TextChanged="txt_search_TextChanged"
+               HorizontalOptions="Fill"
+               HeightRequest="45"/>
+
+            <!-- Botão novo sempre colado à direita -->
+            <Button Text="Novo Produto"
+            Grid.Column="1"
+            Clicked="btn_novo_Clicked"
+            HeightRequest="45"
+            BackgroundColor="DarkGreen"
+            TextColor="White"
+            CornerRadius="10"/>
+
+            <!-- Botão editar sempre colado à direita -->
+            <Button Text="Editar Produto"
+            Grid.Column="2"
+            Clicked="btn_editar_Clicked"
+            HeightRequest="45"
+            BackgroundColor="LightCoral"
+            TextColor="White"
+            CornerRadius="10"/>
+
+        </Grid>
 
         <!-- Lista de produtos -->
-        <CollectionView x:Name="lst_produtos">
+        <CollectionView Grid.Row="1"
+                x:Name="lst_produtos"
+                SelectionMode="Single"
+                SelectionChanged="lst_produtos_SelectionChanged">
 
             <!-- Define como cada item será exibido -->
             <CollectionView.ItemTemplate>
@@ -46,5 +80,6 @@
             </CollectionView.ItemTemplate>
 
         </CollectionView>
+
     </VerticalStackLayout>
 </ContentPage>
