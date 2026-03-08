@@ -5,28 +5,33 @@
              Title="Edição de Produto">
 
     <ScrollView>
-        <!--Adicionado o Scroll-->
-        <VerticalStackLayout Padding="20" Spacing="15">
+        
+        <!-- Layout vertical que organiza os elementos um abaixo do outro -->
+        <VerticalStackLayout Padding="20" Spacing="15"> <!-- Padding cria uma margem interna e Spacing define o espaço entre os elementos -->
 
+            <!-- Campo de descrição do produto -->
             <Label Text="Descrição"/>
             <Entry x:Name="txt_descricao"/>
 
+            <!-- Campo de quantidade do produto -->
             <Label Text="Quantidade"/>
-            <Entry x:Name="txt_quantidade" Keyboard="Numeric"/>
+            <Entry x:Name="txt_quantidade" Keyboard="Numeric"/> <!-- Keyboard="Numeric" faz o teclado mostrar apenas números -->
 
+            <!-- Campo de preço do produto -->
             <Label Text="Preço"/>
-            <Entry x:Name="txt_preco" Keyboard="Numeric"/>
+            <Entry x:Name="txt_preco" Keyboard="Numeric"/> <!-- Também usa teclado numérico -->
 
-            <!--Botões de confirmação-->
-            <HorizontalStackLayout Spacing="10">
+            
+            <!-- Botões de confirmação -->
+            <HorizontalStackLayout Spacing="10"> <!-- HorizontalStackLayout organiza os botões lado a lado -->
 
-                <!--Botão para Salvar-->
+                <!-- Botão para Salvar -->
                 <Button Text="Salvar Alterações"
                     Clicked="btn_salvar_Clicked"
                     BackgroundColor="Green"
                     TextColor="White"/>
 
-                <!--Botão para cancelar-->
+                <!-- Botão para Cancelar -->
                 <Button Text="Cancelar"
                 Clicked="btn_cancelar_Clicked"
                 BackgroundColor="Red"

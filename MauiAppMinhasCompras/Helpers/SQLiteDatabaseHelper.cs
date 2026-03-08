@@ -3,42 +3,49 @@ using SQLite;
 namespace MauiAppMinhasCompras.Helpers 
 { 
     public class SQLiteDatabaseHelper 
-    { 
-        readonly SQLiteAsyncConnection _conn; 
+    {
+        readonly SQLiteAsyncConnection _conn; // Cria uma conexão assíncrona com o banco SQLite
 
+        // Construtor da classe - recebe o caminho do banco de dados
         public SQLiteDatabaseHelper(string path) 
-        { 
-            _conn = new SQLiteAsyncConnection(path); 
-            _conn.CreateTableAsync<Produto>().Wait(); 
-        } 
+        {
+            _conn = new SQLiteAsyncConnection(path); // Cria a conexão com o banco
 
-        public Task<int> Insert(Produto p) 
-        { 
-            return _conn.InsertAsync(p); 
-        } 
+            _conn.CreateTableAsync<Produto>().Wait(); // Cria a tabela Produto caso ela ainda não exista
+        }
 
-        public Task<List<Produto>> Update(Produto p) 
-        { 
-            string sql = "UPDATE Produto SET Descricao=?, Quantidade=?, Preco=? WHERE Id=?"; 
-            
-            return _conn.QueryAsync<Produto>(sql, p.Descricao, p.Quantidade, p.Preco, p.Id); 
-        } 
+        // Método responsável por inserir um produto no banco de dados
+        public Task<int> Insert(Produto p)
+        {
+            return _conn.InsertAsync(p); // Insere o objeto Produto na tabela Produto
+        }
 
-        public Task<int> Delete(int id) 
-        { 
-            return _conn.Table<Produto>().DeleteAsync(i => i.Id == id); 
-        } 
+        // Método responsável por atualizar um produto existente
+        public Task<int> Update(Produto p)
+        {
+            return _conn.UpdateAsync(p); // Atualiza o registro usando a chave primária (Id)
+        }
 
-        public Task<List<Produto>> GetAll() 
-        { 
-            return _conn.Table<Produto>().ToListAsync(); 
-        } 
+        // Método responsável por excluir um produto pelo Id
+        public Task<int> Delete(int id)
+        {
+            string sql = "DELETE FROM Produto WHERE Id = ?"; // Comando SQL para remover o produto da tabela
 
-        public Task<List<Produto>> Search(string q) 
-        { 
-            string sql = "SELECT * Produto WHERE descricao LIKE '%" + q + "%'"; 
-            
-            return _conn.QueryAsync<Produto>(sql); 
-        } 
+            return _conn.ExecuteAsync(sql, id); // Executa o comando passando o Id como parâmetro
+        }
+
+        // Método que retorna todos os produtos cadastrados
+        public Task<List<Produto>> GetAll()
+        {
+            return _conn.Table<Produto>().ToListAsync(); // Consulta a tabela Produto e retorna todos os registros
+        }
+
+        // Método responsável por pesquisar produtos pela descrição
+        public Task<List<Produto>> Search(string q)
+        {
+            string sql = "SELECT * FROM Produto WHERE descricao LIKE '%" + q + "%'"; // Comando SQL que busca produtos que contenham o texto informado
+
+            return _conn.QueryAsync<Produto>(sql); // Executa a consulta e retorna a lista de produtos encontrados
+        }
     } 
 }

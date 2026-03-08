@@ -1,42 +1,40 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MauiAppMinhasCompras.Views.NovoProduto"
-             Title="Adição de Produto">
+             x:Class="MauiAppMinhasCompras.Views.ExcluirProduto"
+             Title="Excluir Produto">
     <VerticalStackLayout Padding="20" Spacing="15">
 
         <!-- Campo Descrição -->
         <Label Text="Descrição do produto"/>
         <Entry x:Name="txt_descricao"
-                   Placeholder="Ex: Arroz"/>
+               IsReadOnly="True"/> <!-- IsReadOnly="True" impede que o usuário altere o conteúdo -->
 
         <!-- Campo Quantidade -->
         <Label Text="Quantidade"/>
         <Entry x:Name="txt_quantidade"
-                 Keyboard="Numeric"
-                 Placeholder="Ex: 2"/> <!-- Keyboard="Numeric" faz aparecer o teclado numérico -->
+               IsReadOnly="True"/> <!-- Apenas leitura, pois nesta tela o produto só pode ser excluído -->
 
         <!-- Campo Preço -->
         <Label Text="Preço unitário"/>
         <Entry x:Name="txt_preco"
-               Keyboard="Numeric"
-               Placeholder="Ex: 5.99"/> <!-- Keyboard="Numeric" faz aparecer o teclado numérico -->
+               IsReadOnly="True"/> <!-- Também está bloqueado para edição -->
 
+        
+        <!-- Botões -->
+        <HorizontalStackLayout Spacing="10">
 
-        <!--Botões de confirmação-->
-        <HorizontalStackLayout Spacing="10"> <!-- HorizontalStackLayout organiza os botões lado a lado -->
-
-            <!--Botão para Adicionar Produto-->
-            <Button Text="Salvar"
-                    Clicked="btn_salvar_Clicked"
-                    BackgroundColor="DarkGreen"
+            <!-- Botão de exclusão -->
+            <Button Text="Excluir"
+                    Clicked="btn_excluir_Clicked"
+                    BackgroundColor="DarkRed"
                     TextColor="White"
                     HorizontalOptions="FillAndExpand"/>
 
-            <!--Botão para Cancelar-->
+            <!-- Botão de cancelar exclusão -->
             <Button Text="Cancelar"
                     Clicked="btn_cancelar_Clicked"
-                    BackgroundColor="Red"
+                    BackgroundColor="Gray"
                     TextColor="White"
                     HorizontalOptions="FillAndExpand"/>
 

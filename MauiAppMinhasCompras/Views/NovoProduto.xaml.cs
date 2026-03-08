@@ -11,11 +11,9 @@ namespace MauiAppMinhasCompras.Views
         {
             InitializeComponent();
 
-            // Caminho do banco local do app
-            string path = FileSystem.AppDataDirectory + "/compras.db3";
+            string path = FileSystem.AppDataDirectory + "/compras.db3"; // Caminho do banco local do app
 
-            // Instancia o helper SQLite
-            _db = new SQLiteDatabaseHelper(path);
+            _db = new SQLiteDatabaseHelper(path); // Instancia o helper SQLite
         }
 
         private async void btn_salvar_Clicked(object sender, EventArgs e)
@@ -30,31 +28,27 @@ namespace MauiAppMinhasCompras.Views
                     Preco = Convert.ToDouble(txt_preco.Text)
                 };
 
-                // Insere no banco
-                await _db.Insert(p);
+                await _db.Insert(p); // Insere no banco
 
-                // Mostra confirmação
-                await DisplayAlert("Sucesso", "Produto cadastrado!", "OK");
+                await DisplayAlert("Sucesso", "Produto cadastrado!", "OK"); // Mostra confirmação
 
                 // Limpa campos após salvar
                 txt_descricao.Text = string.Empty;
                 txt_quantidade.Text = string.Empty;
                 txt_preco.Text = string.Empty;
 
-                // Volta para a tela anterior
-                await Navigation.PopAsync();
+               await Navigation.PopAsync();  // Volta para a tela anterior
             }
             catch (Exception ex)
             {
-                // Mostra erro caso algo falhe
-                await DisplayAlert("Erro", ex.Message, "OK");
+                await DisplayAlert("Erro", ex.Message, "OK"); // Mostra erro caso algo falhe
             }
         }
 
         // Cancela a criação e volta para a tela anterior
         private async void btn_cancelar_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PopAsync();
+            await Navigation.PopAsync(); // Retorna para a tela anterior sem salvar as alterações
         }
     }
 }
