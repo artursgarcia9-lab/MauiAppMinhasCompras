@@ -20,7 +20,37 @@ namespace MauiAppMinhasCompras.Views
         {
             try
             {
-                // Cria objeto Produto preenchendo com os dados digitados
+                // Validação da descrição (Nome)
+                if (string.IsNullOrWhiteSpace(txt_descricao.Text))
+                {
+                    await DisplayAlert("Erro", "Informe descrição do produto.", "OK");
+                    return;
+                }
+
+                string descricao = txt_descricao.Text?.Trim(); // Remove espaços extras
+
+                // Verifica se já existe produto com mesma descrição
+                if (await _db.ExistsDescricao(descricao))
+                {
+                    await DisplayAlert("Erro", "Já existe um produto com essa descrição.", "OK");
+                    return;
+                }
+
+                // Validação da quantidade
+                if (!double.TryParse(txt_quantidade.Text, out double quantidade) || quantidade <= 0)
+                {
+                    await DisplayAlert("Erro", "Quantidade deve ser maior que zero.", "OK");
+                    return;
+                }
+
+                // Validação do preço
+                if (!double.TryParse(txt_preco.Text, out double preco) || preco <= 0)
+                {
+                    await DisplayAlert("Erro", "Preço deve ser maior que zero.", "OK");
+                    return;
+                }
+
+                // Cria objeto Produto preenchendo com os dados digitados validados
                 Produto p = new Produto
                 {
                     Descricao = txt_descricao.Text,
@@ -38,6 +68,10 @@ namespace MauiAppMinhasCompras.Views
                 txt_preco.Text = string.Empty;
 
                await Navigation.PopAsync();  // Volta para a tela anterior
+            }
+            catch (FormatException) // Captura erros de formatação (ex: texto em campo numérico)
+            {
+                await DisplayAlert("Erro", "Quantidade e preço devem ser números.", "OK"); // Mostra mensagem de erro específica
             }
             catch (Exception ex)
             {

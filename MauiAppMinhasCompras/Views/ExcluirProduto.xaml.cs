@@ -30,19 +30,22 @@ namespace MauiAppMinhasCompras.Views
         private async void btn_excluir_Clicked(object sender, EventArgs e)
         {
             // Exibe uma mensagem de confirmação para o usuário
-            bool confirm = await DisplayAlert(
-                "Confirmar", "Deseja realmente excluir este produto?", "Sim", "Não"
-            );
-
-            // Se o usuário escolher "Não", a operação é cancelada
+            bool confirm = await DisplayAlert("Confirmar", "Deseja realmente excluir este produto?", "Sim", "Não"); // Se o usuário escolher "Não", a operação é cancelada
             if (!confirm)
                 return;
 
-            await _db.Delete(_produto.Id); // Executa a exclusão do produto no banco de dados usando o Id
+            try
+            {
+                await _db.Delete(_produto.Id); // Executa a exclusão do produto no banco de dados usando o Id
 
-            await DisplayAlert("Sucesso", "Produto excluído!", "OK");  // Exibe uma mensagem informando que a exclusão foi realizada com sucesso
+                await DisplayAlert("Sucesso", "Produto excluído!", "OK");  // Exibe uma mensagem informando que a exclusão foi realizada com sucesso
 
-            await Navigation.PopAsync(); // Retorna para a página anterior da navegação
+                await Navigation.PopAsync(); // Retorna para a página anterior da navegação
+            }
+            catch (Exception ex) // Captura qualquer exceção que possa ocorrer durante a exclusão
+            {
+                await DisplayAlert("Erro", ex.Message, "OK"); // Exibe uma mensagem de erro caso a exclusão falhe
+            }
         }
 
         // Método executado quando o botão "Cancelar" é clicado

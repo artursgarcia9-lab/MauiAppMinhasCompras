@@ -25,16 +25,24 @@ namespace MauiAppMinhasCompras.Views
         // Método executado sempre que a página aparece na tela
         protected async override void OnAppearing() 
         { 
-            base.OnAppearing(); 
-            var lista = await _db.GetAll(); // Busca todos os produtos no banco de dados         
-            produtos.Clear(); // Limpa a coleção atual
-            // Adiciona os produtos na ObservableCollection
-            foreach (var p in lista) 
-            {
-                produtos.Add(p);
-            }
+            base.OnAppearing();
 
-            CalcularTotal(lista); // Calcula o valor total dos produtos
+            try // Tenta carregar os produtos do banco de dados
+            {
+                var lista = await _db.GetAll(); // Busca todos os produtos no banco de dados         
+                produtos.Clear(); // Limpa a coleção atual
+                // Adiciona os produtos na ObservableCollection
+                foreach (var p in lista)
+                {
+                    produtos.Add(p);
+                }
+
+                CalcularTotal(lista); // Calcula o valor total dos produtos
+            } 
+            catch (Exception ex) // Trata qualquer erro que possa ocorrer durante a carga dos produtos
+            {
+                await DisplayAlert("Erro", $"Falha ao carregar os produtos: {ex.Message}", "OK");
+            }
         }
 
         // Evento executado quando o texto da busca é alterado
@@ -98,23 +106,26 @@ namespace MauiAppMinhasCompras.Views
                 return;
             }
 
-            bool confirm = await DisplayAlert(
-                "Confirmar",
-                "Deseja realmente excluir este produto?",
-                "Sim",
-                "Não"
-            ); // Confirma a exclusão
+            bool confirm = await DisplayAlert("Confirmar", "Deseja realmente excluir este produto?", "Sim", "Não"); // Confirma a exclusão
 
             if (!confirm)
                 return;
 
-            await _db.Delete(_produtoSelecionado.Id); // Remove o produto do banco de dados
+            try // Tenta excluir o produto selecionado
+            {
 
-            produtos.Remove(_produtoSelecionado); // Remove o produto da ObservableCollection (atualiza a interface automaticamente)
+                await _db.Delete(_produtoSelecionado.Id); // Remove o produto do banco de dados
 
-            CalcularTotal(produtos.ToList()); // Recalcula o total após a exclusão
+                produtos.Remove(_produtoSelecionado); // Remove o produto da ObservableCollection (atualiza a interface automaticamente)
 
-            _produtoSelecionado = null; // Limpa a seleção de exclusão
+                CalcularTotal(produtos.ToList()); // Recalcula o total após a exclusão
+
+                _produtoSelecionado = null; // Limpa a seleção de exclusão
+            }
+            catch (Exception ex) // Trata qualquer erro que possa ocorrer durante a exclusão
+            {
+                await DisplayAlert("Erro", $"Falha ao excluir o produto: {ex.Message}", "OK");
+            }
         }
 
         // Método responsável por calcular o valor total dos produtos

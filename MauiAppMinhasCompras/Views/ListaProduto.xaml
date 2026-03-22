@@ -68,23 +68,38 @@
 
                     <Frame Margin="5" Padding="10" BorderColor="Gray"> <!-- Card visual que representa um produto -->
 
-                        <VerticalStackLayout> <!-- Layout vertical para organizar os dados do produto -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                            <!-- Exibe o nome (descrição) do produto -->
-                            <Label Text="{Binding Descricao}"
-                            FontSize="18"
-                            FontAttributes="Bold"/>
+                            <VerticalStackLayout>
+                                <!-- Layout vertical para organizar os dados do produto -->
 
-                            <!-- Exibe a quantidade do produto -->
-                            <Label Text="{Binding Quantidade,
-                                   StringFormat='Quantidade: {0}'}"/>
+                                <!-- Exibe o nome (descrição) do produto -->
+                                <Label Text="{Binding Descricao}"
+                                FontSize="18"
+                                FontAttributes="Bold"/>
 
-                            <!-- Exibe o preço do produto formatado -->
-                            <Label Text="{Binding Preco,
-                                   StringFormat='Preço: R$ {0:F2}'}"/>
+                                <!-- Exibe a quantidade do produto -->
+                                <Label Text="{Binding Quantidade,
+                                       StringFormat='Quantidade: {0}'}"/>
 
-                        </VerticalStackLayout>
+                                <!-- Exibe o preço do produto formatado -->
+                                <Label Text="{Binding Preco,
+                                       StringFormat='Preço: R$ {0:F2}'}"/>
 
+                            </VerticalStackLayout>
+                            
+                            <!-- ID do produto (lado direito) -->
+                            <Label Grid.Column="1"
+                            Text="{Binding Id, StringFormat='ID: #{0:000}'}"
+                            FontSize="14"
+                            TextColor="Gray"
+                            VerticalOptions="Start"
+                            HorizontalOptions="End"/>
+                        </Grid>
                     </Frame>
 
                 </DataTemplate>

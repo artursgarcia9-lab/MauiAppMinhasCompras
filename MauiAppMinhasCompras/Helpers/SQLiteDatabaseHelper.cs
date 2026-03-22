@@ -47,5 +47,15 @@ namespace MauiAppMinhasCompras.Helpers
 
             return _conn.QueryAsync<Produto>(sql); // Executa a consulta e retorna a lista de produtos encontrados
         }
+
+        // Método que verifica se já existe um produto com a mesma descrição (case-insensitive)
+        public async Task<bool> ExistsDescricao(string descricao)
+        {
+            string sql = "SELECT * FROM Produto WHERE LOWER(Descricao) = LOWER(?)";
+
+            var resultado = await _conn.QueryAsync<Produto>(sql, descricao);
+
+            return resultado.Count > 0; // Retorna true se encontrar algum produto com a mesma descrição, caso contrário retorna false
+        }
     } 
 }
