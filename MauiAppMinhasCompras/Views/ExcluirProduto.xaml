@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiAppMinhasCompras.Views.ExcluirProduto"
+             Title="Excluir Produto">
+    <VerticalStackLayout Padding="20" Spacing="15">
+
+        <!-- Campo Descrição -->
+        <Label Text="Descrição do produto"/>
+        <Entry x:Name="txt_descricao"
+               IsReadOnly="True"/>
+        <!-- IsReadOnly="True" impede que o usuário altere o conteúdo -->
+
+        <!-- Campo Quantidade -->
+        <Label Text="Quantidade"/>
+        <Entry x:Name="txt_quantidade"
+               IsReadOnly="True"/>
+        <!-- Apenas leitura, pois nesta tela o produto só pode ser excluído -->
+
+        <!-- Campo Preço -->
+        <Label Text="Preço unitário"/>
+        <Entry x:Name="txt_preco"
+               IsReadOnly="True"/>
+        <!-- Também está bloqueado para edição -->
+
+
+        <!-- Botões -->
+        <HorizontalStackLayout Spacing="10">
+
+            <!-- Botão de exclusão -->
+            <Button Text="Excluir"
+                    Clicked="btn_excluir_Clicked"
+                    BackgroundColor="DarkRed"
+                    TextColor="White"
+                    HorizontalOptions="FillAndExpand"/>
+
+            <!-- Botão de cancelar exclusão -->
+            <Button Text="Cancelar"
+                    Clicked="btn_cancelar_Clicked"
+                    BackgroundColor="Gray"
+                    TextColor="White"
+                    HorizontalOptions="FillAndExpand"/>
+
+        </HorizontalStackLayout>
+
+    </VerticalStackLayout>
+</ContentPage>
