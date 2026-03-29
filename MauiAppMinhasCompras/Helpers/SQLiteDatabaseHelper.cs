@@ -74,5 +74,19 @@ namespace MauiAppMinhasCompras.Helpers
                 .Select(p => p.Categoria)
                 .ToList();
         }
+
+        // Método pra juntar e somar os produtos por categoria
+        public async Task<List<RelatorioCategoria>> GetRelatorioCategoria()
+        {
+            string sql = @"
+        SELECT 
+            Categoria, 
+            SUM(Preco * Quantidade) AS Total
+        FROM Produto
+        GROUP BY Categoria
+        ORDER BY Total DESC";
+
+            return await _conn.QueryAsync<RelatorioCategoria>(sql);
+        }
     }
 }

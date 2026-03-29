@@ -231,5 +231,39 @@ namespace MauiAppMinhasCompras.Views
 
             lbl_total.Text = $"Total: R$ {total:F2}"; // Mostra o valor total na tela formatado em moeda
         }
+
+        private async void btn_relatorio_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                var dados = await _db.GetRelatorioCategoria();
+
+                if (dados == null || dados.Count == 0)
+                {
+                    await DisplayAlert("Relatório", "Nenhum dado encontrado.", "OK");
+                    return;
+                }
+
+                // Monta o texto do relatório
+                string mensagem = "Relatório de Gastos por Categoria:\n\n";
+
+                double totalGeral = 0;
+
+                foreach (var item in dados)
+                {
+                    mensagem += $"{item.Categoria}: R$ {item.Total:F2}\n";
+                    totalGeral += item.Total;
+                }
+
+                mensagem += $"\nTOTAL GERAL: R$ {totalGeral:F2}";
+
+                // Exibe o alerta
+                await DisplayAlert("Relatório", mensagem, "OK");
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", $"Falha ao gerar relatório: {ex.Message}", "OK");
+            }
+        }
     }
 }

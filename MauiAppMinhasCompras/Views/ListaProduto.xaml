@@ -3,91 +3,114 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppMinhasCompras.Views.ListaProduto"
              Title="Lista de Compra">
-    <VerticalStackLayout>
+
+    <!-- Grid principal da página (corrige problema de sobreposição) -->
+    <Grid>
+
+        <!-- Definição das linhas principais da tela -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Topo (filtros + botões) -->
+            <RowDefinition Height="*"/>
+            <!-- Lista / Relatório -->
+            <RowDefinition Height="Auto"/>
+            <!-- Total -->
+        </Grid.RowDefinitions>
 
         <!-- Grid usado para organizar os elementos da parte superior da tela -->
-        <Grid Grid.Row="0" Padding="10" ColumnSpacing="10">
+        <Grid Grid.Row="0" Padding="10" RowSpacing="10" ColumnSpacing="10">
 
+            <!-- Linhas internas do topo -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Busca -->
+                <RowDefinition Height="Auto"/>
+                <!-- Categoria -->
+                <RowDefinition Height="Auto"/>
+                <!-- Botões -->
+            </Grid.RowDefinitions>
+
+            <!-- Colunas internas -->
             <Grid.ColumnDefinitions>
-               
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/> <!-- Busca -->
-                    <RowDefinition Height="Auto"/> <!-- Categoria -->
-                </Grid.RowDefinitions>
-
-                <!-- Coluna que ocupa todo o espaço disponível -->
-                <ColumnDefinition Width="*" /> <!-- Utilizada pela barra de pesquisa -->
-                <ColumnDefinition Width="Auto" /> <!-- Coluna com largura automática para o botão Novo -->
-                <ColumnDefinition Width="Auto" /> <!-- Coluna com largura automática para o botão Editar -->
-                <ColumnDefinition Width="Auto" /> <!-- Coluna com largura automática para o botão Excluir -->
-
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <!-- Barra de pesquisa de produtos, permite ao usuário buscar produtos pelo nome -->
+            <!-- Barra de pesquisa -->
             <SearchBar x:Name="txt_search"
-                Grid.Column="0"
-                Placeholder="Buscar produto..."
-                TextChanged="txt_search_TextChanged"
-                HorizontalOptions="Fill"
-                HeightRequest="45"/>
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="4"
+                       Placeholder="Buscar produto..."
+                       TextChanged="txt_search_TextChanged"
+                       HeightRequest="40"/>
 
             <!-- Filtro por categoria -->
-            <Frame 
-            Grid.Column="1"
-            Padding="10,5"
-            CornerRadius="10"
-            BackgroundColor="#2D2D2D"
-            HasShadow="False"
-            HeightRequest="45">
+            <Frame Grid.Row="1"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="4"
+                   Padding="10"
+                   CornerRadius="10"
+                   BackgroundColor="#2D2D2D">
 
                 <Picker x:Name="picker_categoria"
-            Title="Categoria"
-            SelectedIndexChanged="Filtro_Changed"
-            TextColor="White"/>
+                        Title="Selecione uma categoria"
+                        SelectedIndexChanged="Filtro_Changed"
+                        FontSize="16"
+                        HeightRequest="50"/>
             </Frame>
 
             <!-- Botão para adicionar um novo produto -->
-            <Button Text="Novo Produto"
-            Grid.Column="2"
-            Clicked="btn_novo_Clicked"
-            HeightRequest="45"
-            BackgroundColor="DarkGreen"
-            TextColor="White"
-            CornerRadius="10"/>
+            <Button Text="Novo"
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Clicked="btn_novo_Clicked"
+                    BackgroundColor="DarkGreen"
+                    TextColor="White"
+                    CornerRadius="10"/>
 
             <!-- Botão para editar o produto selecionado -->
-            <Button Text="Editar Produto"
-            Grid.Column="3"
-            Clicked="btn_editar_Clicked"
-            HeightRequest="45"
-            BackgroundColor="LightCoral"
-            TextColor="White"
-            CornerRadius="10"/>
+            <Button Text="Editar"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Clicked="btn_editar_Clicked"
+                    BackgroundColor="LightCoral"
+                    TextColor="White"
+                    CornerRadius="10"/>
 
             <!-- Botão para excluir o produto selecionado -->
-            <Button Text="Excluir Produto"
-            Grid.Column="4"
-            Clicked="btn_excluir_Clicked"
-            BackgroundColor="DarkRed"
-            TextColor="White"
-            HeightRequest="45"
-            CornerRadius="10"/>
+            <Button Text="Excluir"
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Clicked="btn_excluir_Clicked"
+                    BackgroundColor="DarkRed"
+                    TextColor="White"
+                    CornerRadius="10"/>
+
+            <!-- NOVO: Botão para abrir relatório -->
+            <Button Text="Relatório"
+                    Grid.Row="2"
+                    Grid.Column="3"
+                    Clicked="btn_relatorio_Clicked"
+                    BackgroundColor="DarkBlue"
+                    TextColor="White"
+                    CornerRadius="10"/>
 
         </Grid>
 
         <!-- Lista de produtos cadastrados -->
+        <!-- Agora ocupa uma linha própria (não sofre mais sobreposição) -->
         <CollectionView Grid.Row="1"
-                x:Name="lst_produtos"
-                SelectionMode="Single"
-                SelectionChanged="lst_produtos_SelectionChanged">
+                        x:Name="lst_produtos"
+                        SelectionMode="Single"
+                        SelectionChanged="lst_produtos_SelectionChanged">
 
             <CollectionView.ItemTemplate>
-                <!-- Define o modelo visual de cada item da lista -->
-
                 <DataTemplate>
 
                     <Frame Margin="5" Padding="10" BorderColor="Gray">
-                        <!-- Card visual que representa um produto -->
 
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -96,39 +119,34 @@
                             </Grid.ColumnDefinitions>
 
                             <VerticalStackLayout>
-                                <!-- Layout vertical para organizar os dados do produto -->
 
                                 <!-- Exibe o nome (descrição) do produto -->
                                 <Label Text="{Binding Descricao}"
-                                FontSize="18"
-                                FontAttributes="Bold"/>
+                                       FontSize="18"
+                                       FontAttributes="Bold"/>
 
                                 <!-- Exibe a quantidade do produto -->
                                 <Label Text="{Binding Quantidade,
                                        StringFormat='Quantidade: {0}'}"/>
 
-                                <!-- Exibe o preço do produto formatado -->
+                                <!-- Exibe o preço do produto -->
                                 <Label Text="{Binding Preco,
                                        StringFormat='Preço: R$ {0:F2}'}"/>
 
                             </VerticalStackLayout>
 
                             <VerticalStackLayout Grid.Column="1"
-                             Spacing="2"
-                             VerticalOptions="Center"
-                             HorizontalOptions="End">
+                                                 VerticalOptions="Center">
 
                                 <!-- ID -->
                                 <Label Text="{Binding Id, StringFormat='ID: #{0:000}'}"
-                                FontSize="14"
-                                TextColor="White"
-                                HorizontalOptions="Center"/>
+                                       FontSize="14"
+                                       TextColor="White"/>
 
-                                <!-- Categoria abaixo do ID -->
+                                <!-- Categoria -->
                                 <Label Text="{Binding Categoria, StringFormat='Categoria: {0}'}"
-                                FontSize="14"
-                                TextColor="White"
-                                HorizontalOptions="End"/>
+                                       FontSize="14"
+                                       TextColor="White"/>
                             </VerticalStackLayout>
 
                         </Grid>
@@ -136,18 +154,18 @@
                     </Frame>
 
                 </DataTemplate>
-
             </CollectionView.ItemTemplate>
 
         </CollectionView>
 
-        <!-- Label que exibe o valor total dos produtos na lista -->
-        <Label x:Name="lbl_total"
-        Text="Total: R$ 0,00"
-        FontSize="20"
-        FontAttributes="Bold"
-        HorizontalOptions="End"
-        Margin="10"/>
+        <!-- Label que exibe o valor total dos produtos -->
+        <Label Grid.Row="2"
+               x:Name="lbl_total"
+               Text="Total: R$ 0,00"
+               FontSize="20"
+               FontAttributes="Bold"
+               HorizontalOptions="End"
+               Margin="10"/>
 
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>
