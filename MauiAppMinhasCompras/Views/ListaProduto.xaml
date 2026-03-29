@@ -9,19 +9,17 @@
         <Grid Grid.Row="0" Padding="10" ColumnSpacing="10">
 
             <Grid.ColumnDefinitions>
-                <!-- Definição das colunas do Grid -->
+               
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/> <!-- Busca -->
+                    <RowDefinition Height="Auto"/> <!-- Categoria -->
+                </Grid.RowDefinitions>
 
                 <!-- Coluna que ocupa todo o espaço disponível -->
-                <ColumnDefinition Width="*" />
-                <!-- Utilizada pela barra de pesquisa -->
-                <ColumnDefinition Width="150" />
-                <!-- Utilizado pelo filtro por Categoria -->
-                <ColumnDefinition Width="Auto" />
-                <!-- Coluna com largura automática para o botão Novo -->
-                <ColumnDefinition Width="Auto" />
-                <!-- Coluna com largura automática para o botão Editar -->
-                <ColumnDefinition Width="Auto" />
-                <!-- Coluna com largura automática para o botão Excluir -->
+                <ColumnDefinition Width="*" /> <!-- Utilizada pela barra de pesquisa -->
+                <ColumnDefinition Width="Auto" /> <!-- Coluna com largura automática para o botão Novo -->
+                <ColumnDefinition Width="Auto" /> <!-- Coluna com largura automática para o botão Editar -->
+                <ColumnDefinition Width="Auto" /> <!-- Coluna com largura automática para o botão Excluir -->
 
             </Grid.ColumnDefinitions>
 
@@ -34,11 +32,19 @@
                 HeightRequest="45"/>
 
             <!-- Filtro por categoria -->
-            <Picker x:Name="picker_categoria"
+            <Frame 
             Grid.Column="1"
+            Padding="10,5"
+            CornerRadius="10"
+            BackgroundColor="#2D2D2D"
+            HasShadow="False"
+            HeightRequest="45">
+
+                <Picker x:Name="picker_categoria"
             Title="Categoria"
             SelectedIndexChanged="Filtro_Changed"
-            HeightRequest="45"/>
+            TextColor="White"/>
+            </Frame>
 
             <!-- Botão para adicionar um novo produto -->
             <Button Text="Novo Produto"
